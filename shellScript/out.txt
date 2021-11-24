@@ -1,0 +1,14 @@
+# started on Tue Nov 23 21:10:45 2021
+
+
+ Performance counter stats for './memory_access 64 1':
+
+       343,648,909      cache-references                                            
+       127,111,116      cache-misses              #   36.989 % of all cache refs    
+
+       4.544618330 seconds time elapsed
+
+      10.295758000 seconds user
+       3.911765000 seconds sys
+
+
