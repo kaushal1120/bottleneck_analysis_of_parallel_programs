@@ -16,7 +16,6 @@ int isprime(int x)
 
 int main(int argc, char* argv[])
 {
-    int sum = 0;
     int nthreads = atoi(argv[1]);
     bool enable_overhead = atoi(argv[2]);
     double thread_time[nthreads];
@@ -33,7 +32,7 @@ int main(int argc, char* argv[])
         }
     }
     else{
-        #pragma omp parallel for schedule(dynamic,4) 
+        #pragma omp parallel for schedule(dynamic,4)
         for(int i = NUM; i >= 2 ; i--)
         {
             double start = omp_get_wtime();
@@ -41,7 +40,7 @@ int main(int argc, char* argv[])
             thread_time[omp_get_thread_num()] += omp_get_wtime()-start;
         }
     }
-    
+
     for(int i = 0; i < nthreads; i++){
         cout<<thread_time[i]<<endl;
     }

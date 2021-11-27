@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     omp_set_num_threads(nthreads);
 
     if(enable_overhead){
-        #pragma omp parallel for schedule(dynamic,4) 
+        #pragma omp parallel for schedule(dynamic,4)
         for(int i = NUM; i >= 2 ; i--)
         {
             #pragma omp critical
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         }
     }
     else{
-        #pragma omp parallel for schedule(dynamic,4) 
+        #pragma omp parallel for schedule(dynamic,4)
         for(int i = NUM; i >= 2 ; i--)
         {
             int local_sum = isprime(i);
