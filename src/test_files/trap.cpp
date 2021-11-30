@@ -7,28 +7,25 @@ double Trap(double a, double b, int n);
 int main(int argc, char*  argv[]) {
 
     double global_result = 0.0;
-    double a, b;
-    int n;
+    double a = atof(argv[1]), b = atof(argv[2]);
+    int n = atof(argv[3]);
     int thread_count;
 
-    thread_count = 16;
-
-    printf("Enter a, b, and n\n");
-    scanf("%lf %lf %d", &a, &b, &n);
+    thread_count = 8;
 
     #pragma omp parallel num_threads(thread_count)
     {
-	#pragma omp critical
+        #pragma omp critical
         global_result += Trap(a,b,n);
     }
-    
+
     printf("With n = %d trapezoids, our estimatenn", n);
     printf("of the integral from %f to %f = %.14e\n",
     a, b, global_result);
 
     return 0;
 
-}  
+}
 
 int f (int num){
     return num*num;
@@ -48,8 +45,8 @@ double Trap(double a, double b, int n) {
 
     my_result = (f(local_a) + f(local_b))/2.0;
     for (i = 1; i <= local_n-1; i++) {
-    	x = local_a + i*h;
-    	my_result += f(x);
+        x = local_a + i*h;
+        my_result += f(x);
     }
 
     my_result = my_result*h;

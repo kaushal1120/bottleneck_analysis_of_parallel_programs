@@ -64,7 +64,7 @@ echo "Generating false sharing counters"
 
 filename='out.txt'
 OUTPUT=`awk '/L1-dcache-load-misses     #/ {print substr( $4, 1, length($4)-1 )}' out.txt`
-BENCHMARK=0.7
+BENCHMARK=0.9
 
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
@@ -80,7 +80,7 @@ operf ./$name $args >/dev/null
 opreport --demangle=smart --symbols > out_2.txt 2>&1
 filename='out_2.txt'
 OUTPUT=`awk '{ if($3 ~ /libgomp/) sum += $2 } END { print sum }' out_2.txt`
-BENCHMARK=15
+BENCHMARK=8.0
 
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
@@ -106,8 +106,8 @@ fi
 
 echo "Generating load balance counters..."
 
-operf -t ./$name $args >/dev/null 
-opreport --demangle=smart --symbols > out_4.txt 
+operf -t ./$name $args >/dev/null
+opreport --demangle=smart --symbols > out_4.txt
 init=0
 d=()
 count=0
@@ -122,8 +122,8 @@ do
         index=0
         for i in $line
         do
-            if [[ $index -lt $count*2 ]]; then 
-                if [[ $(expr $index % 2) -eq 0 ]]; then 
+            if [[ $index -lt $count*2 ]]; then
+                if [[ $(expr $index % 2) -eq 0 ]]; then
                     [[ -z ${d[$index]} ]] && d[$index]=0
                     d[$index]=$(expr ${d[$index]}  + $i)
                 fi
@@ -146,7 +146,7 @@ done
 
 s=`echo "$max - $min" | bc`
 OUTPUT=`echo "scale=4; $s/$max" | bc`
-BENCHMARK=0.3
+BENCHMARK=0.5
 
 if (($(echo "$OUTPUT > $BENCHMARK" |bc -l)));
 then

@@ -7,19 +7,16 @@ double Trap(double a, double b, int n);
 int main(int argc, char*  argv[]) {
 
     double global_result = 0.0;
-    double a, b;
-    int n;
+    double a = atof(argv[1]), b = atof(argv[2]);
+    int n = atof(argv[3]);
     int thread_count;
 
-    thread_count = 16;
-
-    printf("Enter a, b, and n\n");
-    scanf("%lf %lf %d", &a, &b, &n);
+    thread_count = 8;
 
     #pragma omp parallel num_threads(thread_count)
     {
         double local_result = Trap(a,b,n);
-	#pragma omp critical
+        #pragma omp critical
         global_result += local_result;
     }
 
