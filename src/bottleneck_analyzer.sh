@@ -52,6 +52,8 @@ filename='out.txt'
 OUTPUT=`awk '/cache-misses              #/ {print $4}' out.txt`
 BENCHMARK=23.0
 
+echo "output for memory access bottleneck -> ""$OUTPUT"
+
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
     FinalOutput+=$'Possible bad memory access patterns.\n'
@@ -64,7 +66,10 @@ echo "Generating false sharing counters"
 
 filename='out.txt'
 OUTPUT=`awk '/L1-dcache-load-misses     #/ {print substr( $4, 1, length($4)-1 )}' out.txt`
-BENCHMARK=0.9
+BENCHMARK=0.85
+
+echo "output for false sharing bottleneck -> ""$OUTPUT"
+
 
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
@@ -82,6 +87,9 @@ filename='out_2.txt'
 OUTPUT=`awk '{ if($3 ~ /libgomp/) sum += $2 } END { print sum }' out_2.txt`
 BENCHMARK=8.0
 
+echo "output for OMP constructs bottleneck -> ""$OUTPUT"
+
+
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
     FinalOutput+=$'Possible overheads due to OMP constructs.\n'
@@ -95,6 +103,9 @@ echo "Generating critical region counters..."
 filename='out_2.txt'
 OUTPUT=`awk '{ if($4 ~ /gomp_mutex_lock_slow/) sum += $2 } END { if(!sum) print "0" ; else print sum }' out_2.txt`
 BENCHMARK=45
+
+echo "output for critical regions bottleneck -> ""$OUTPUT"
+
 
 if (( $(echo "$OUTPUT > $BENCHMARK" |bc -l) ));
 then
@@ -147,6 +158,8 @@ done
 s=`echo "$max - $min" | bc`
 OUTPUT=`echo "scale=4; $s/$max" | bc`
 BENCHMARK=0.5
+echo "output for load imbalance bottleneck -> ""$OUTPUT"
+
 
 if (($(echo "$OUTPUT > $BENCHMARK" |bc -l)));
 then
