@@ -6,6 +6,9 @@ CONTENTS OF THIS FILE
  * Installation
  * Using the tool
  * Final outcome
+ * Further Details
+ * Sample Program Details
+ * Notes
 
 
 INTRODUCTION
@@ -27,7 +30,7 @@ No need to Install, It's just a bash script.
 Please give permission if required - chmod +x bottleneck_analyzer.sh
 
 
-USING OF TOOL
+USING THE TOOL
 ----------------
 
 simply run the tool as any other bash script.
@@ -79,16 +82,18 @@ operf  -t ./<executable file name> <Arguments to the executable if any>
 SAMPLE PROGRAM DETAILS
 ------------------------
 
-    
+    Matrix Multiplication
     ----------------------------------------------------------------------------------------------------------------------------------
 
     ./bottleneck_analyzer.sh matmul.cpp     - Arguments <type of matrix multiplication (0|1)>  
                                                   0 - transpose the other matrix so that we can multiply row wise, to promote good memory access patterns
                                                   1 - generic matrix multiplication, were we multiply row of the first matrix to the column of other matrix. 
     example:
+            ./bottleneck_analyzer.sh matmul.cpp  0
+            
+            
 
-    ./bottleneck_analyzer.sh matmul.cpp  0
-
+    Intergrals Calcuation Using Trapezoidal rules
     ----------------------------------------------------------------------------------------------------------------------------------
 
     ./bottleneck_analyzer.sh trap.cpp        - Arguments <a> <b> <n>  (calculate intergrals using trapeziodal rules, from limits a to b and n divisions)
@@ -101,8 +106,10 @@ SAMPLE PROGRAM DETAILS
 
     With Trap2 and Trap3 we see better critical region performance.
 
+    
+    
+    Bottleneck Programs
     ----------------------------------------------------------------------------------------------------------------------------------
-
 
     ./bottleneck_analyzer.sh critical_overhead.cpp   - Arguments <number of threads>  <bottleneck enabled (0|1)> (argument 1 decides number of threads to run on, argument 2 enables or disables bottleneck)
     ./bottleneck_analyzer.sh false_sharing.cpp       - Arguments <number of threads>  <bottleneck enabled (0|1)> (argument 1 decides number of threads to run on, argument 2 enables or disables bottleneck)
